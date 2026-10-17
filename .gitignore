@@ -1,0 +1,6 @@
+# generated test clips (make-test-clips.ps1) and build output
+test/clips/
+dist/
+publish/
+__pycache__/
+*.pyc
