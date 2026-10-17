@@ -126,14 +126,6 @@ RTX 3080 での測定結果（標準プリセット、t=0.5 の PSNR、単純ブ
 | ズーム | 33.6 dB | 29.1 dB | +4.5 dB |
 | testsrc2 | 31.3 dB | 26.5 dB | +4.8 dB |
 
-## 配布
-
-```
-py -3.10 -E tools\package.py
-```
-
-`dist/nurunuru-frames-<version>.zip` ができます。manifest.json が zip の直下にあるので、そのまま Chrome ウェブストアにアップロードできます。受け取った人が展開して「パッケージ化されていない拡張機能を読み込む」で使うこともできます（手順は同梱の README.txt）。`test/` のテスト映像などは含まれません。
-
 ## ライセンス
 
 このリポジトリのスクリプトと文書は MIT ライセンスです（[LICENSE](LICENSE)）。
