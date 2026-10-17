@@ -4,3 +4,7 @@ dist/
 publish/
 __pycache__/
 *.pyc
+
+# local-only development tools (not published)
+test/
+tools/

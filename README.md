@@ -87,45 +87,6 @@ GPU のタイムスタンプで「動き推定（ソース 1 フレームあた�
 - RIFE などの AI 補間には対応していません
 - ブラウザのタブを切り替えると、戻ったときに数フレームだけ元の映像に戻ってから補間を再開します
 
-## 開発・テスト
-
-```
-extension/                 拡張機能本体（ビルド不要の素の JS）
-  content/engine/          WebGPU エンジン（shaders.js: WGSL、interpolator.js: 取り込み・動き推定・描画）
-  content/main.js          再生ループ（rVFC での取り込み、rAF での描画、バイパス判定）
-  content/clock.js         メディアクロックと遅延の管理
-  content/overlay.js       video に重ねる canvas
-  content/audio-sync.js    WebAudio の DelayNode による音声遅延
-  popup/                   設定画面
-  README.txt               配布用の説明書（zip に同梱）
-test/
-  make-test-clips.ps1      ffmpeg（SVP 4 同梱のものを参照）で 60fps の合成テスト映像を作る
-  harness.html / .js       品質テスト（偶数フレームから奇数フレームを補間して PSNR を比較）と、ローカル動画の補間再生
-  cdp.py                   テスト用の一時プロファイルで Vivaldi を起動し、DevTools Protocol で操作する
-tools/make_icons.py        アイコン生成
-tools/package.py           配布用 zip（dist/nurunuru-frames-<version>.zip）を作る
-```
-
-品質テストの実行例:
-
-```
-powershell -File test\make-test-clips.ps1
-py -3.10 -E -m http.server 8765 --bind 127.0.0.1
-py -3.10 -E test\cdp.py launch
-py -3.10 -E test\cdp.py open http://127.0.0.1:8765/test/harness.html
-py -3.10 -E test\cdp.py eval harness.html "runQuality().then(r => JSON.stringify(r))"
-```
-
-RTX 3080 での測定結果（標準プリセット、t=0.5 の PSNR、単純ブレンドとの比較）:
-
-| クリップ | 動き補償 | 単純ブレンド | 差 |
-| --- | --- | --- | --- |
-| パン | 33.9 dB | 17.6 dB | +16.3 dB |
-| 高速パン | 33.7 dB | 18.0 dB | +15.8 dB |
-| 動く物体（オクルージョン） | 30.7 dB | 21.2 dB | +9.5 dB |
-| ズーム | 33.6 dB | 29.1 dB | +4.5 dB |
-| testsrc2 | 31.3 dB | 26.5 dB | +4.8 dB |
-
 ## ライセンス
 
 このリポジトリのスクリプトと文書は MIT ライセンスです（[LICENSE](LICENSE)）。
